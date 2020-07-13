@@ -3,4 +3,4 @@
 
 - include: zfs_scripts.yml
 
-- include: os_cleanup.yml
+- include: os_cleanups.yml

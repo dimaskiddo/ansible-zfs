@@ -5,4 +5,4 @@
 
 - include: iscsi-lio_services.yml
 
-- include: os_cleanup.yml
+- include: os_cleanups.yml
