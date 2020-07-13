@@ -10,7 +10,7 @@
   shell: service target status | grep not-found || true
   args:
     warn: false
-  register: iscsi-lio_service_info
+  register: iscsi_lio_service_info
   when:
     - service_init_status.stat.exists
 
@@ -20,4 +20,4 @@
     enabled: yes
     state: restarted
   when:
-    - iscsi-lio_service_info.stdout.find("not-found") == -1
+    - iscsi_lio_service_info.stdout.find("not-found") == -1

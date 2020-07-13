@@ -13,5 +13,5 @@
 
 - name: Set Host Facts
   set_fact:
-    uninstall_iscsi-lio: "{{ uninstall_iscsi-lio | default(default_value, true) }}"
+    uninstall_iscsi_lio: "{{ uninstall_iscsi_lio | default(default_value, true) }}"
     uninstall_nfs: "{{ uninstall_nfs | default(default_value, true) }}"

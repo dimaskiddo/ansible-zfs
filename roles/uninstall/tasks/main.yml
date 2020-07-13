@@ -4,17 +4,17 @@
 - include: iscsi-lio_zfs_scripts.yml
   when:
     - inventory_hostname in groups['iscsi-lio']
-    - uninstall_iscsi-lio
+    - uninstall_iscsi_lio
 
 - include: iscsi-lio_services.yml
   when:
     - inventory_hostname in groups['iscsi-lio']
-    - uninstall_iscsi-lio
+    - uninstall_iscsi_lio
 
 - include: iscsi-lio_packages.yml
   when:
     - inventory_hostname in groups['iscsi-lio']
-    - uninstall_iscsi-lio
+    - uninstall_iscsi_lio
 
 - include: nfs_zfs_scripts.yml
   when:
