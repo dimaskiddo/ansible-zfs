@@ -1,0 +1,42 @@
+---
+- include: facts.yml
+
+- include: iscsi-lio_zfs_scripts.yml
+  when:
+    - inventory_hostname in groups['iscsi-lio']
+    - uninstall_iscsi-lio
+
+- include: iscsi-lio_services.yml
+  when:
+    - inventory_hostname in groups['iscsi-lio']
+    - uninstall_iscsi-lio
+
+- include: iscsi-lio_packages.yml
+  when:
+    - inventory_hostname in groups['iscsi-lio']
+    - uninstall_iscsi-lio
+
+- include: nfs_zfs_scripts.yml
+  when:
+    - inventory_hostname in groups['nfs']
+    - uninstall_nfs
+
+- include: nfs_services.yml
+  when:
+    - inventory_hostname in groups['nfs']
+    - uninstall_nfs
+
+- include: nfs_packages.yml
+  when:
+    - inventory_hostname in groups['nfs']
+    - uninstall_nfs
+
+- include: zfs_scripts.yml
+  when:
+    - inventory_hostname in groups['zfs']
+
+- include: zfs_packages.yml
+  when:
+    - inventory_hostname in groups['zfs']
+
+- include: os_cleanups.yml

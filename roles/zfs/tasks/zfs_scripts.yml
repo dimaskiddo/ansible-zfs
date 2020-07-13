@@ -1,0 +1,16 @@
+---
+- name: Generate ZFS Create Script
+  template:
+    src: zfs-create.j2
+    dest: /usr/local/bin/zfs-create
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Generate ZFS Destroy Script
+  template:
+    src: zfs-destroy.j2
+    dest: /usr/local/bin/zfs-destroy
+    owner: root
+    group: root
+    mode: 0755

@@ -1,0 +1,20 @@
+---
+- hosts: all
+  any_errors_fatal: true
+  roles:
+  - role: common
+
+- hosts: zfs
+  any_errors_fatal: true
+  roles:
+  - role: zfs
+
+- hosts: nfs
+  any_errors_fatal: true
+  roles:
+  - role: nfs
+
+- hosts: iscsi-lio
+  any_errors_fatal: true
+  roles:
+  - role: iscsi-lio

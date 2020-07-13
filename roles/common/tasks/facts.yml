@@ -1,0 +1,12 @@
+---
+- name: Fail if Operating System is not Supported
+  fail:
+    msg: "Minimum Operating System Version Ubuntu 16.04"
+  when:
+    - ansible_distribution != 'Ubuntu'
+    - ansible_distribution_major_version | int >= 16
+
+- name: Get Service Init Status
+  stat:
+    path: /sbin/init
+  register: service_init_status

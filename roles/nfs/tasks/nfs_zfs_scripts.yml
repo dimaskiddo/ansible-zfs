@@ -1,0 +1,8 @@
+---
+- name: Generate ZFS Export NFS Script
+  template:
+    src: zfs-export-nfs.j2
+    dest: /usr/local/bin/zfs-export-nfs
+    owner: root
+    group: root
+    mode: 0755

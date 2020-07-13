@@ -1,0 +1,10 @@
+---
+- name: Uninstall ZFS Create Script
+  file:
+    path: /usr/local/bin/zfs-create
+    state: absent
+
+- name: Uninstall ZFS Destroy Script
+  file:
+    path: /usr/local/bin/zfs-destroy
+    state: absent

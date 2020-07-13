@@ -1,0 +1,11 @@
+---
+- name: Remove Useless Packages From The Cache
+  shell: apt-get clean
+  args:
+    warn: false
+
+- name: Remove Dependencies That Are No Longer Required
+  apt:
+    force_apt_get: yes
+    autoremove: yes
+    purge: yes

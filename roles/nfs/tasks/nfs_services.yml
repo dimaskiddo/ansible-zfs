@@ -1,0 +1,23 @@
+---
+- name: Reload NFS Server Service
+  systemd:
+    daemon_reload: yes
+  when:
+    - service_init_status.stat.islnk is defined
+    - service_init_status.stat.islnk
+
+- name: Get NFS Server Service Info
+  shell: service nfs-server status | grep not-found || true
+  args:
+    warn: false
+  register: nfs_service_info
+  when:
+    - service_init_status.stat.exists
+
+- name: Enable NFS Server Service
+  service:
+    name: nfs-server
+    enabled: yes
+    state: restarted
+  when:
+    - nfs_service_info.stdout.find("not-found") == -1

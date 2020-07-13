@@ -1,0 +1,6 @@
+---
+- include: zfs_packages.yml
+
+- include: zfs_scripts.yml
+
+- include: os_cleanup.yml

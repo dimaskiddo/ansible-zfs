@@ -1,0 +1,8 @@
+---
+- include: iscsi-lio_packages.yml
+
+- include: iscsi-lio_zfs_scripts.yml
+
+- include: iscsi-lio_services.yml
+
+- include: os_cleanup.yml

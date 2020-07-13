@@ -1,0 +1,10 @@
+---
+- include: nfs_packages.yml
+
+- include: nfs_configs.yml
+
+- include: nfs_zfs_scripts.yml
+
+- include: nfs_services.yml
+
+- include: os_cleanup.yml

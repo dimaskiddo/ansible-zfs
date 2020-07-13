@@ -1,0 +1,9 @@
+---
+- name: Uninstall ZFS Packages
+  apt:
+    name: "{{ item }}"
+    force_apt_get: yes
+    purge: yes
+    state: absent
+  with_items:
+    - zfsutils-linux

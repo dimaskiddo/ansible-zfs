@@ -1,0 +1,9 @@
+---
+- name: Uninstall NFS Server Packages
+  apt:
+    name: "{{ item }}"
+    force_apt_get: yes
+    purge: yes
+    state: absent
+  with_items:
+    - nfs-kernel-server

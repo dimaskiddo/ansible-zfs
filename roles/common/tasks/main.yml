@@ -1,0 +1,6 @@
+---
+- include: facts.yml
+
+- include: os_packages.yml
+
+- include: os_cleanups.yml

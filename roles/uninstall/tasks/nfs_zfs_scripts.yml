@@ -1,0 +1,5 @@
+---
+- name: Uninstall ZFS Export NFS Script
+  file:
+    path: /usr/local/bin/zfs-export-nfs
+    state: absent

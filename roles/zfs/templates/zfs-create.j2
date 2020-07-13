@@ -1,0 +1,135 @@
+#!/bin/bash -e
+IS_NUMBER='^[0-9]+$'
+
+clear
+echo "Script Executed: $(date)"
+echo ""
+
+echo "--------------------------------------------"
+echo "ZFS Dataset Thin Provisioning Creator Tools"
+echo "Email: dimas.restu@student.upi.edu"
+echo "--------------------------------------------"
+
+
+echo "Checking-up Requirement"
+if [ $UID != 0 ]; then
+  echo "Administrator Previlege Needed. Please Run This Program As An Administrator/Root User!"
+  exit 1
+fi
+ZFS_EXIST=$(which zfs | wc -l)
+if [ $ZFS_EXIST -eq 0 ]; then
+  echo "Please Install ZFS (zfs) Command First!"
+  exit 1
+fi
+echo "Requirement Fullfiled"
+
+
+echo "--------------------------------------------"
+echo "Input Existing ZFS Data Root (Without Trailing Slash):"
+read ZFS_DATA_ROOT
+
+if [ -z $ZFS_DATA_ROOT ]; then
+  echo "Please Input ZFS Data Root First!"
+  exit 1
+else
+  ZFS_DATA_ROOT_CHECK=$(zfs list | grep $ZFS_DATA_ROOT | wc -l)
+  if [ $ZFS_DATA_ROOT_CHECK -eq 0 ]; then
+    echo "ZFS Data Root Not Found. Please Input The Correct ZFS Data Root First!"
+    exit 1
+  fi
+fi
+
+
+echo ""
+echo "Input ZFS Dataset Start Number:"
+read ZFS_DATASET_START_NUMBER
+
+if [ -z $ZFS_DATASET_START_NUMBER ]; then
+  echo "Please Input ZFS Dataset Start Number First!"
+  exit 1
+else
+  if ! [[ $ZFS_DATASET_START_NUMBER =~ $IS_NUMBER ]]; then
+    echo "ZFS Dataset Start Number Must An Integer!"
+    exit 1
+  fi
+fi
+
+
+echo ""
+echo "Input ZFS Dataset Last Number:"
+read ZFS_DATASET_LAST_NUMBER
+
+if [ -z $ZFS_DATASET_LAST_NUMBER ]; then
+  echo "Please Input ZFS Dataset Last Number First!"
+  exit 1
+else
+  if ! [[ $ZFS_DATASET_LAST_NUMBER =~ $IS_NUMBER ]]; then
+    echo "ZFS Dataset Last Number Must An Integer!"
+    exit 1
+  else
+    if [ $ZFS_DATASET_LAST_NUMBER -lt $ZFS_DATASET_START_NUMBER ]; then
+      echo "ZFS Dataset Last Number Must Larger Than Or Equal With ZFS Dataset Start Number!"
+      exit 1
+    fi
+  fi
+fi
+
+
+echo ""
+echo "Input ZFS Dataset Volume Size (GiB):"
+read ZFS_DATASET_VOL_SIZE
+
+if [ -z $ZFS_DATASET_VOL_SIZE ]; then
+  echo "Please Input ZFS Dataset Volume Size First!"
+  exit 1
+else
+  if ! [[ $ZFS_DATASET_VOL_SIZE =~ $IS_NUMBER ]]; then
+    echo "ZFS Dataset Volume Size Must An Integer Number!"
+    exit 1
+  fi
+fi
+
+
+echo ""
+echo "Input ZFS Dataset File System Type:"
+read ZFS_DATASET_FS_TYPE
+
+if [ -z $ZFS_DATASET_FS_TYPE ]; then
+  echo "Please Input ZFS Dataset File System Type First!"
+  exit 1
+fi
+
+
+echo "--------------------------------------------"
+PROCESS_CHECK_STATUS_MENU=true
+while [ $PROCESS_CHECK_STATUS_MENU == true ]; do
+  read -p "Do You Want To Start The Process Now? [y/n] " yn
+  case $yn in
+    [Yy]* ) PROCESS_CHECK_STATUS_MENU=false;;
+    [Nn]* ) exit 1;;
+    * ) echo "Please Answer With Yes (y) Or No (n)."; echo "";;
+  esac
+done
+
+LOOP=$ZFS_DATASET_START_NUMBER
+until [ $LOOP -gt $ZFS_DATASET_LAST_NUMBER ]
+do
+  ZFS_DATASET_NAME=$(printf "%.3d" "$LOOP")
+
+  echo "- Creating ZFS Dataset: ${ZFS_DATA_ROOT}/${ZFS_DATASET_NAME}"
+  zfs create -s -o volblocksize=64k -V ${ZFS_DATASET_VOL_SIZE}G $ZFS_DATA_ROOT/${ZFS_DATASET_NAME}
+
+  sleep 1
+  mkfs -t ${ZFS_DATASET_FS_TYPE} -f /dev/zvol/$ZFS_DATA_ROOT/${ZFS_DATASET_NAME}
+  fsck -fy /dev/zvol/$ZFS_DATA_ROOT/${ZFS_DATASET_NAME}
+
+  echo ""
+
+  LOOP=$(($LOOP+1))
+done
+
+
+echo "--------------------------------------------"
+echo ""
+echo "Script Finished: $(date)"
+exit 0

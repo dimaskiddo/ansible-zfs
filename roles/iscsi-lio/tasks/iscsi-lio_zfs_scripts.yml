@@ -1,0 +1,8 @@
+---
+- name: Generate ZFS Export ISCSI LIO Script
+  template:
+    src: zfs-export-lio.j2
+    dest: /usr/local/bin/zfs-export-lio
+    owner: root
+    group: root
+    mode: 0755

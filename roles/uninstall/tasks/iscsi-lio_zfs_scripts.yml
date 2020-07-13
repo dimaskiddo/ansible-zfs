@@ -1,0 +1,5 @@
+---
+- name: Uninstall ZFS Export LIO Script
+  file:
+    path: /usr/local/bin/zfs-export-lio
+    state: absent

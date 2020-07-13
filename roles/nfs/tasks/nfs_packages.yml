@@ -1,0 +1,10 @@
+---
+- name: Install NFS Server Packages
+  apt:
+    name: "{{ item }}"
+    force_apt_get: yes
+    update_cache: yes
+    dpkg_options: "force-confdef,force-confold,force-confmiss"
+    state: present
+  with_items:
+    - nfs-kernel-server

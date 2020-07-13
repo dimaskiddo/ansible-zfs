@@ -1,0 +1,23 @@
+---
+- name: Get ISCSI LIO Service Info
+  shell: service target status | grep not-found || true
+  args:
+    warn: false
+  register: iscsi-lio_service_info
+  when:
+    - service_init_status.stat.exists
+
+- name: Disable ISCSI LIO Service
+  service:
+    name: target
+    enabled: no
+    state: stopped
+  when:
+    - iscsi-lio_service_info.stdout.find("not-found") == -1
+
+- name: Reload ISCSI LIO Service
+  systemd:
+    daemon_reload: yes
+  when:
+    - service_init_status.stat.islnk is defined
+    - service_init_status.stat.islnk
