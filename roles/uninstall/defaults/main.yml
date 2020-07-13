@@ -1,6 +1,6 @@
 ---
 # Default Value for Uninstall ISCSI LIO
-uninstall_iscsi-lio: 'false'
+uninstall_iscsi_lio: 'false'
 
 # Default Value for Uninstall NFS
 uninstall_nfs: 'false'
