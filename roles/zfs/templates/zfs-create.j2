@@ -120,7 +120,7 @@ do
   zfs create -s -o volblocksize=64k -V ${ZFS_DATASET_VOL_SIZE}G $ZFS_DATA_ROOT/${ZFS_DATASET_NAME}
 
   sleep 1
-  mkfs -t ${ZFS_DATASET_FS_TYPE} -f /dev/zvol/$ZFS_DATA_ROOT/${ZFS_DATASET_NAME}
+  mkfs -t ${ZFS_DATASET_FS_TYPE} /dev/zvol/$ZFS_DATA_ROOT/${ZFS_DATASET_NAME}
   fsck -fy /dev/zvol/$ZFS_DATA_ROOT/${ZFS_DATASET_NAME}
 
   echo ""
